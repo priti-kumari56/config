@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: APIGATEWAY2
+
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: product-service
+              uri: lb://PRODUCTSERVICE
+              predicates:
+                - Path=/products/**
+            - id: order-service
+              uri: lb://ORDERSERVICE
+              predicates:
+                - Path=/orders/**
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
